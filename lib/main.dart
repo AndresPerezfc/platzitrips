@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:platzitrips/description_place.dart';
+import 'package:platzitrips/header_appbar.dart';
+import 'package:platzitrips/review_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,27 +19,23 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Scaffold(
-          appBar: AppBar(
-            title: Text('PlatziTrips'),
+          /*appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'PlatziTrips',
+            ),
+          ), */
+          body: Stack(
+            children: <Widget>[
+              ListView(
+                children: <Widget>[
+                  DescriptionPlace('Andrés', 1, "Andrés lo lograste!!"),
+                  ReviewList(),
+                ],
+              ),
+              HeaderAppbar()
+            ],
           ),
-          body: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          'https://i.pinimg.com/736x/4c/ec/be/4cecbee04767e11c2f235373ea613374.jpg'),
-                      fit: BoxFit.cover)),
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(0, 0, 0, 0.6),
-                  ),
-                  child: Text(
-                    "Hola Mundo",
-                    style: TextStyle(fontSize: 50.0, color: Colors.white),
-                  ),
-                ),
-              )),
         ) //////MyHomePage(title: 'Flutter Demo Home Page'),
         );
   }
