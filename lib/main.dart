@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:platzitrips/description_place.dart';
 import 'package:platzitrips/header_appbar.dart';
+import 'package:platzitrips/platziPage.dart';
 import 'package:platzitrips/review_list.dart';
 
 void main() {
@@ -12,32 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Scaffold(
-          /*appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'PlatziTrips',
-            ),
-          ), */
-          body: Stack(
-            children: <Widget>[
-              ListView(
-                children: <Widget>[
-                  DescriptionPlace('Andrés', 1, "Andrés lo lograste!!"),
-                  ReviewList(),
-                ],
-              ),
-              HeaderAppbar()
-            ],
-          ),
-        ) //////MyHomePage(title: 'Flutter Demo Home Page'),
-        );
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: PlatziPage(), //////MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 
