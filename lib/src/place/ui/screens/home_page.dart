@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:platzitrips/review_list.dart';
+import 'package:platzitrips/src/place/ui/widgets/review_list.dart';
 
-import 'description_place.dart';
+import 'package:platzitrips/src/place/ui/widgets/description_place.dart';
 import 'header_appbar.dart';
 
 class HomePage extends StatelessWidget {

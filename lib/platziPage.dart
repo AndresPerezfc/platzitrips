@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:platzitrips/home_page.dart';
-import 'package:platzitrips/profile_page.dart';
-import 'package:platzitrips/serach_page.dart';
+import 'package:platzitrips/src/place/ui/screens/home_page.dart';
+import 'package:platzitrips/src/user/ui/screens/profile_trips.dart';
+import 'package:platzitrips/src/place/ui/screens/search_trips.dart';
 
 class PlatziPage extends StatefulWidget {
   @override
@@ -12,8 +12,8 @@ class _PlatziPageState extends State<PlatziPage> {
   int indexTap = 0;
   final List<Widget> widgetsChildren = [
     HomePage(),
-    SearchPage(),
-    ProfilePage()
+    SearchTrips(),
+    ProfileTrips()
   ];
 
   void onTapTapped(int index) {
