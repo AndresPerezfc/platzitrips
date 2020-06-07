@@ -5,6 +5,7 @@ import 'package:platzitrips/src/place/ui/widgets/description_place.dart';
 import 'package:platzitrips/src/place/ui/screens/header_appbar.dart';
 import 'package:platzitrips/platziPage.dart';
 import 'package:platzitrips/src/place/ui/widgets/review_list.dart';
+import 'package:platzitrips/src/user/ui/screens/sign_in_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: PlatziPage(),
+        home: SignInScreen(),
+        //PlatziPage(),
       ),
       bloc: UserBloc(),
     );
