@@ -5,6 +5,7 @@ import 'package:platzitrips/src/place/ui/widgets/description_place.dart';
 import 'package:platzitrips/src/place/ui/screens/header_appbar.dart';
 import 'package:platzitrips/platziPage.dart';
 import 'package:platzitrips/src/place/ui/widgets/review_list.dart';
+import 'package:platzitrips/src/user/bloc/bloc_user.dart';
 import 'package:platzitrips/src/user/ui/screens/sign_in_screen.dart';
 
 void main() {
