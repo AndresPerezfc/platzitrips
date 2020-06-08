@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitrips/src/place/ui/screens/home_page.dart';
+import 'package:platzitrips/src/user/bloc/bloc_user.dart';
+
 import 'package:platzitrips/src/user/ui/screens/profile_trips.dart';
 import 'package:platzitrips/src/place/ui/screens/search_trips.dart';
 
@@ -10,10 +13,12 @@ class PlatziPage extends StatefulWidget {
 
 class _PlatziPageState extends State<PlatziPage> {
   int indexTap = 0;
+  UserBloc userBloc;
+
   final List<Widget> widgetsChildren = [
     HomePage(),
     SearchTrips(),
-    ProfileTrips()
+    BlocProvider<UserBloc>(bloc: UserBloc(), child: ProfileTrips())
   ];
 
   void onTapTapped(int index) {
