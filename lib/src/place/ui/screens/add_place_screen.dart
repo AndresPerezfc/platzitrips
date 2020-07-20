@@ -1,7 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:platzitrips/src/place/model/place.dart';
+import 'package:platzitrips/src/place/ui/widgets/card_image.dart';
 import 'package:platzitrips/src/place/ui/widgets/title_input_location.dart';
+import 'package:platzitrips/src/user/bloc/bloc_user.dart';
+import 'package:platzitrips/src/widgets/button_purple.dart';
 import 'package:platzitrips/src/widgets/gradient_back.dart';
 import 'package:platzitrips/src/widgets/text_input.dart';
 import 'package:platzitrips/src/widgets/title_header.dart';
@@ -18,6 +23,7 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   @override
   Widget build(BuildContext context) {
+    UserBloc userBloc = BlocProvider.of<UserBloc>(context);
     final _controllerTitlePlace = TextEditingController();
     final _controllerDescriptionPlace = TextEditingController();
 
@@ -61,9 +67,18 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             margin: EdgeInsets.only(top: 120, bottom: 20),
             child: ListView(
               children: <Widget>[
-                Container(),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  alignment: Alignment.center,
+                  child: CardImageWithFabIcon(
+                    pathImage: "assets/img/land1.jpg",
+                    iconData: Icons.camera,
+                    width: 350,
+                    height: 250,
+                    marginLeft: 0,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20, bottom: 20),
                   child: TextInput(
                     hintText: "Titulo",
                     inputType: null,
@@ -83,7 +98,25 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     hintText: "Añadir locación",
                     iconData: Icons.place,
                   ),
-                )
+                ),
+                Container(
+                  width: 70,
+                  child: ButtonPurple(
+                    buttonText: "Agregar Lugar",
+                    onPressed: () {
+                      userBloc
+                          .updatePlaceData(Place(
+                        name: _controllerTitlePlace.text,
+                        description: _controllerDescriptionPlace.text,
+                        likes: 0,
+                      ))
+                          .whenComplete(() {
+                        print("Termino");
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                ),
               ],
             ),
           ),
