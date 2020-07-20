@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitrips/src/place/model/place.dart';
+import 'package:platzitrips/src/place/repository/firebase_storage_repository.dart';
 import 'package:platzitrips/src/user/model/user.dart';
 import 'package:platzitrips/src/user/repository/auth_repository.dart';
 import 'package:platzitrips/src/user/repository/cloud_firestore_repository.dart';
@@ -17,6 +21,8 @@ class UserBloc implements Bloc {
   Stream<FirebaseUser> get authStatus =>
       streamFirebase; //devuelve el estado de la sesion
 
+  Future<FirebaseUser> get currentUser => FirebaseAuth.instance.currentUser();
+
   //Casos de uso del objeto user
   // 1. hacer signIn con la aplicacion de google
 
@@ -24,6 +30,10 @@ class UserBloc implements Bloc {
 
   Future<void> updatePlaceData(Place place) =>
       _cloudFirestoreRepository.updatePlaceData(place);
+
+  final _firebaseStorageRepository = FirebaseStorageRepository();
+  Future<StorageUploadTask> uploadFile(String path, File image) =>
+      _firebaseStorageRepository.uploadFile(path, image);
 
   // 2. Cerrar sesión
   signOut() {

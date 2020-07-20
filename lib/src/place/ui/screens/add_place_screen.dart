@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitrips/src/place/model/place.dart';
@@ -70,7 +72,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: CardImageWithFabIcon(
-                    pathImage: "assets/img/land1.jpg",
+                    pathImage: widget.image.path, //"assets/img/land1.jpg",
                     iconData: Icons.camera,
                     width: 350,
                     height: 250,
@@ -104,15 +106,35 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   child: ButtonPurple(
                     buttonText: "Agregar Lugar",
                     onPressed: () {
-                      userBloc
-                          .updatePlaceData(Place(
-                        name: _controllerTitlePlace.text,
-                        description: _controllerDescriptionPlace.text,
-                        likes: 0,
-                      ))
-                          .whenComplete(() {
-                        print("Termino");
-                        Navigator.pop(context);
+                      userBloc.currentUser.then((FirebaseUser user) {
+                        if (user != null) {
+                          String uid = user.uid;
+                          String path =
+                              "${uid}/${DateTime.now().toString()}.jpg";
+                          userBloc
+                              .uploadFile(path, widget.image)
+                              .then((StorageUploadTask storageUploadTask) {
+                            storageUploadTask.onComplete
+                                .then((StorageTaskSnapshot snapshot) {
+                              snapshot.ref.getDownloadURL().then((urlImage) {
+                                print("url: ${urlImage}");
+
+                                userBloc
+                                    .updatePlaceData(Place(
+                                  name: _controllerTitlePlace.text,
+                                  description: _controllerDescriptionPlace.text,
+                                  urlImage: urlImage,
+                                  likes: 0,
+                                ))
+                                    .whenComplete(() {
+                                  print("Termino");
+
+                                  Navigator.pop(context);
+                                });
+                              });
+                            });
+                          });
+                        }
                       });
                     },
                   ),
