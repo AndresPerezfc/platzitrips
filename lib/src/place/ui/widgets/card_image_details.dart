@@ -66,6 +66,7 @@ class CardImageDetail extends StatelessWidget {
             ],
           ),
           FloatingActionButton(
+              heroTag: null,
               onPressed: null,
               mini: true,
               child: Icon(Icons.favorite),
