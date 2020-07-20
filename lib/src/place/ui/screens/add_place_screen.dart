@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:platzitrips/src/widgets/gradient_back.dart';
+import 'package:platzitrips/src/widgets/title_header.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   File image;
@@ -37,6 +38,15 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(top: 45, left: 20, right: 10),
+                  child: TitleHeader(
+                    title: "Agregar Lugar",
                   ),
                 ),
               )
