@@ -1,13 +1,17 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:platzitrips/src/place/model/place.dart';
 import 'package:platzitrips/src/place/repository/firebase_storage_repository.dart';
+import 'package:platzitrips/src/place/ui/widgets/card_image.dart';
 import 'package:platzitrips/src/user/model/user.dart';
 import 'package:platzitrips/src/user/repository/auth_repository.dart';
+import 'package:platzitrips/src/user/repository/cloud_firestore_api.dart';
 import 'package:platzitrips/src/user/repository/cloud_firestore_repository.dart';
+import 'package:platzitrips/src/user/ui/widgets/profile_place.dart';
 
 class UserBloc implements Bloc {
   final _auth_repository = AuthRepository(); //para llamar al metodo signin
@@ -34,6 +38,24 @@ class UserBloc implements Bloc {
   final _firebaseStorageRepository = FirebaseStorageRepository();
   Future<StorageUploadTask> uploadFile(String path, File image) =>
       _firebaseStorageRepository.uploadFile(path, image);
+
+  Stream<QuerySnapshot> placesListStream =
+      Firestore.instance.collection(CloudFirestoreApi().PLACES).snapshots();
+  Stream<QuerySnapshot> get placesStream => placesListStream;
+
+  List<ProfilePlace> buildMyPlaces(List<DocumentSnapshot> placesListSnapshot) =>
+      _cloudFirestoreRepository.buildMyPlaces(placesListSnapshot);
+
+  Stream<QuerySnapshot> myPlacesListStream(String uid) => Firestore.instance
+      .collection(CloudFirestoreApi().PLACES)
+      .where("userOwner",
+          isEqualTo: Firestore.instance
+              .document("${CloudFirestoreApi().USERS}/${uid}"))
+      .snapshots();
+
+  List<CardImageWithFabIcon> buildPlaces(
+          List<DocumentSnapshot> placesListSnapshot) =>
+      _cloudFirestoreRepository.buildPlaces(placesListSnapshot);
 
   // 2. Cerrar sesión
   signOut() {
